@@ -11,12 +11,15 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-red-900/80 shadow-xl/60 p-10">
     <div> <img src='UFS-Logo-Maroon.png' alt="UFS logo" class="h-40 w-96 object-scale-down"/> </div>
-    <h1 class="text-2xl text-center mb-4 mt-2 font-sans-serif" >
+    <h1 class="text-3xl text-center mb-1 mt-5 font-bitter" >
         Hello, User</h1>
+    <h2 class="text-[17.5px] text-center  mb-10 font-bitter text-white">
+        Welcome to the UFS Menu Planner!
+    </h2>
     <nav class="space-y-3 text-xl p-3">
-      <a href="/" class="block text-black hover:underline">Meals for Today</a>
-      <a href="/about" class="block text-black hover:underline">All Meals</a>
-      <a href="/contact" class="block text-black hover:underline">Food FAQs</a>
+      <a href="/" class="block text-black hover:underline font-raleway">Meals for Today</a>
+      <a href="/meals" class="block text-black hover:underline font-raleway">All Meals</a>
+      <a href="/request" class="block text-black hover:underline font-raleway">Food FAQs</a>
     </nav>
   </aside>
 

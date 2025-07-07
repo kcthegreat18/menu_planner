@@ -3,6 +3,7 @@
   export let setActive;
 
   const categories = [
+    { name: 'All Foods', icon: '😋'},
     { name: 'Chicken', icon: '🍗' },
     { name: 'Pork', icon: '🥩' },
     { name: 'Sea Food', icon: '🐟' },
@@ -13,7 +14,7 @@
   ];
 </script>
 
-<div class="flex gap-4 justify-center mt-10">
+<div class="flex gap-20 justify-left mt-2 border-0 ml-10">
   {#each categories as category}
     <button
       on:click={() => setActive(category.name)}

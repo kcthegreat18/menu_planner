@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import DishViewSet, MenuViewSet, MenuDishViewSet, home
 
 router = DefaultRouter()
-router.register(r'dish', DishViewSet)
+router.register(r'dishes', DishViewSet)
 router.register(r'menu', MenuViewSet)
 router.register(r'menu-dish', MenuDishViewSet)
 

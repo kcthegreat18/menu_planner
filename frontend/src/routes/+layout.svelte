@@ -18,6 +18,7 @@
     </h2>
     <nav class="space-y-3 text-xl p-3">
       <a href="/" class="block text-black hover:underline font-raleway">Meals for Today</a>
+      <a href="meals_for_week" class="block text-black hover:underline font-raleway">Meals for the Week </a>
       <a href="/meals" class="block text-black hover:underline font-raleway">All Meals</a>
       <a href="/request" class="block text-black hover:underline font-raleway">Food FAQs</a>
     </nav>

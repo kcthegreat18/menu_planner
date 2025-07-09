@@ -1,30 +1,27 @@
 <script>
-  export let active;
-  export let setActive;
+  export let active = 'All Foods';
+  export let setActive = (val) => {};
 
   const categories = [
-    { name: 'All Foods', icon: '😋'},
-    { name: 'Chicken', icon: '🍗' },
-    { name: 'Pork', icon: '🥩' },
-    { name: 'Sea Food', icon: '🐟' },
-    { name: 'Vegetables', icon: '🥕' },
-    { name: 'Breakfast', icon: '🍳'},
-    { name: 'Snacks', icon: '🍉'}
-
+    { label: "All Foods", code: null },
+    { label: "Chicken", code: "CH" },
+    { label: "Pork", code: "PO" },
+    { label: "Sea Food", code: "SF" },
+    { label: "Vegetables", code: "VE" },
+    { label: "Breakfast", code: "BF" },
+    { label: "Snacks", code: "SN" },
+    { label: "Fruits", code: "FR" }
   ];
 </script>
 
-<div class="flex gap-20 justify-left mt-2 border-0 ml-10">
-  {#each categories as category}
+<div class="flex gap-2 flex-wrap mt-4">
+  {#each categories as cat}
     <button
-      on:click={() => setActive(category.name)}
-      class={`flex flex-col items-center w-20 h-32 rounded-full shadow-md p-5 transition-colors duration-200
-              ${active === category.name ? 'bg-red-800/70 text-black' : 'bg-white text-black'}`}
+      class="px-3 py-1 rounded-full border border-gray-300 text-sm transition-all
+        {active === cat.label ? 'bg-red-600 text-white' : 'bg-white text-gray-700'}"
+      on:click={() => setActive(cat.label)}
     >
-      <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-2xl">
-        {category.icon}
-      </div>
-      <span class="mt-2 text-sm font-medium">{category.name}</span>
+      {cat.label}
     </button>
   {/each}
 </div>

@@ -5,6 +5,9 @@ DISH_TYPE=[
     ("PO", "Pork"),
     ("SF", "Sea Food"),
     ("VE", "Vegerables"),
+    ("BF", "Breakfast"),
+    ("SN", "Snacks"),
+    ("FR", "Fruits")
 ]
 
 DISH_METHOD=[
@@ -18,10 +21,10 @@ DISH_METHOD=[
 ]
 
 DISH_COLOR=[
-    ("O/R","Orange/Red"),
     ("BR", "Brown"),
     ("OR","Orange"),
-    ("WH","White")
+    ("WH","White"),
+    ("YE", "Yellow"),
 ]
 
 # Create your models here.
@@ -29,7 +32,7 @@ class Dish(models.Model):
 
     dish_name=models.CharField(max_length=30, unique=True)
     dish_type=models.CharField(max_length=3,choices=DISH_TYPE)
-    dish_method=models.CharField(max_length=10, choices=DISH_METHOD)
+    dish_method=models.CharField(max_length=10, choices=DISH_METHOD, blank=True)
     dish_color=models.CharField(max_length=4, choices=DISH_COLOR, blank=True)
     dish_description=models.CharField(max_length=100, blank=True)
 

@@ -18,10 +18,8 @@
     </p>
   </div>
 
-  <CategoryButtons 
-    active={selected} 
-    setActive={(/** @type {string} */ value) => selected = value} 
-  />
+<CategoryButtons active={selected} setActive={(/** @type {string} */ val)=>selected=val}
+/>
 
   <FoodList foods={data.dishes} selectedCategory={selected} />
 </main>

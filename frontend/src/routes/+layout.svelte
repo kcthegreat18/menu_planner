@@ -1,6 +1,5 @@
 <!-- src/routes/+layout.svelte -->
 <script>
-  export let data;
   import "../index.css"
   
 </script>

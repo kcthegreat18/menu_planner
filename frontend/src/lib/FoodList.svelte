@@ -4,43 +4,36 @@
   /**
    * @type {any[]}
    */
-  export let foods = [];
-  export let selectedCategory = "All Foods";
-
-const CATEGORY_MAP = {
-  "Chicken": "CH",
-  "Pork": "PO",
-  "Sea Food": "SF",
-  "Vegetables": "VE",
-  "Breakfast": "BF",
-  "Snacks": "SN",
-  "Fruits": "FR",
-};
+  export let foods=[];
+  export let selectedCategory="";
 
 
-$: filteredFoods = selectedCategory === "All Foods"
-  ? foods
-  : foods.filter(food => food.dish_type === CATEGORY_MAP[selectedCategory]);
+  const CATEGORY_MAP = {
+    "Chicken": "CH",
+    "Pork": "PO",
+    "Sea Food": "SF",
+    "Vegetables": "VE",
+    "Breakfast": "BF",
+    "Snacks": "SN",
+    "Fruits": "FR",
+  };
+
+  $: filteredFoods= selectedCategory=== "All Foods" ? foods: foods.filter(food => food.dish_type===CATEGORY_MAP[selectedCategory]);
+
 
 
   // Mock calorie data
   function getMockCalories(food) {
-    switch (food.dish_type) {
-      case "CH": return 99;
-      case "PR": return 100;
-      case "SF": return 98;
-      case "VE": return 79;
-      default: return 85;
-    }
+    return food.dish_calories;
   }
 
   // Mock price data
   function getMockPrice(food) {
     switch (food.dish_type) {
-      case "CHK": return 120;
-      case "PRK": return 130;
-      case "SEA": return 150;
-      case "VEG": return 90;
+      case "CH": return 120;
+      case "PR": return 130;
+      case "SF": return 150;
+      case "VE": return 90;
       default: return 100;
     }
   }
@@ -48,28 +41,23 @@ $: filteredFoods = selectedCategory === "All Foods"
   // Mock rating data
   function getMockRating(food) {
     switch (food.dish_type) {
-      case "CHK": return 4;
-      case "PRK": return 3;
-      case "SEA": return 5;
-      case "VEG": return 2;
+      case "CH": return 4;
+      case "PR": return 3;
+      case "SF": return 5;
+      case "VG": return 2;
       default: return 3;
     }
   }
 
   // Mock image URLs
-  function getMockImage(food) {
-    switch (food.dish_type) {
-      case "CHK": return "https://source.unsplash.com/featured/?grilled,chicken";
-      case "PRK": return "https://source.unsplash.com/featured/?pork";
-      case "SEA": return "https://source.unsplash.com/featured/?seafood";
-      case "VEG": return "https://source.unsplash.com/featured/?vegetables";
-      default: return "https://source.unsplash.com/featured/?food";
-    }
-  }
+function getMockImage(food) {
+  return `https://source.unsplash.com/featured/?${encodeURIComponent(food.dish_name)}`;
+}
+
 </script>
 
 <!-- Display List -->
-<div class="flex flex-col gap-4 mt-4 max-h-[400px] overflow-y-auto pr-2 w-225">
+<div class="flex flex-col gap-4 mt-4 max-h-[530px] overflow-y-auto pr-2 w-225 border-1">
   {#if filteredFoods.length === 0}
     <p class="text-gray-400 italic">No dishes found for this category.</p>
   {:else}

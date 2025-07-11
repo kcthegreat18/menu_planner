@@ -1,6 +1,8 @@
-// +page.js
 export async function load({ fetch }) {
-  const res = await fetch('http://localhost:8000/api/dishes/');
-  const dishes = await res.json();
-  return { dishes };
+  const res = await fetch('http://127.0.0.1:8000/menu-dishes/');
+  const data = await res.json();
+
+  return {
+    dishes: data.map(entry => entry.dish) // unwrap nested "dish"
+  };
 }

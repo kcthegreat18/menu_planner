@@ -6,6 +6,7 @@
    */
   export let foods=[];
   export let selectedCategory="";
+  export let currentDate;
 
 
   const CATEGORY_MAP = {
@@ -51,7 +52,7 @@
 
   // Mock image URLs
 function getMockImage(food) {
-  return `https://source.unsplash.com/featured/?${encodeURIComponent(food.dish_name)}`;
+  return `/images/${food.dish_name}.jpg`;
 }
 
 </script>

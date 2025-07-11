@@ -17,7 +17,7 @@ const categories= [
 <div class="flex gap-2 flex-wrap mt-4 border-1">
   {#each categories as category}
     <button class="px-3 py-1 rounded-full border-1 border-gray-300
-    {active===category.label ? 'bg-red-600 text-white': 'bg-white text-black-700'}" onclick={()=>{setActive(category.label)}}>
+    {active===category.label ? 'bg-red-800/70 text-white': 'bg-white text-black-700'}" onclick={()=>{setActive(category.label)}}>
       {category.label}
     </button>
   {/each}

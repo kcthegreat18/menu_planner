@@ -3,9 +3,10 @@ from rest_framework.routers import DefaultRouter
 from .views import DishViewSet, MenuViewSet, MenuDishViewSet, home
 
 router = DefaultRouter()
-router.register(r'dishes', DishViewSet)
-router.register(r'menu', MenuViewSet)
-router.register(r'menu-dish', MenuDishViewSet)
+router.register(r'dishes', DishViewSet, basename='dishes')
+router.register(r'menus', MenuViewSet, basename='menus')
+router.register(r'menu-dishes', MenuDishViewSet, basename='menu-dishes')
+
 
 urlpatterns = [
     path('', home),  # <-- root of /api/

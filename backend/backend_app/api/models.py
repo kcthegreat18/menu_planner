@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import localdate
 
 DISH_TYPE=[
     ("CH","Chicken"),
@@ -42,11 +43,11 @@ class Dish(models.Model):
 
 
 class Menu(models.Model):
-    date = models.DateField(unique=True)
+    date = models.DateField(unique=True, default=localdate)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Menu for {self.date}"
+        return f"{self.date}"
 
 class MenuDish(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="menu_dishes")

@@ -37,7 +37,7 @@
 
   function formatDateYYYYMMDD(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
@@ -49,18 +49,30 @@
   });
 </script>
 
-<main>
-  <div class="border-0 flex items-center gap-30 mb-5">
-    <h1 class="text-3xl font-bitter font-[600] p-5 ml-2">
-      What's Cookin' for <strong class="text-red-800/70">{currentDate} at {currentTime}</strong> ?
-    </h1>
-    <p class="text-[17.5px] font-medium">
+<main class="px-4 pb-8 border-2">
+  <!-- ✅ Header Section -->
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-bitter font-semibold leading-snug">
+        What's Cookin' for <br class="sm:hidden" />
+        <strong class="text-red-800/70">{currentDate} at {currentTime}</strong>?
+      </h1>
+    </div>
+    <p class="text-base sm:text-lg font-medium text-gray-700">
       Food Choices for: <span class="text-red-800/70">{selected}</span>
     </p>
   </div>
 
-<CategoryButtons active={selected} setActive={(/** @type {string} */ val)=>selected=val}
-/>
+  <!-- ✅ Category Buttons -->
+  <CategoryButtons
+    active={selected}
+    setActive={(val) => selected = val}
+  />
 
-  <FoodList foods={data.dishes} selectedCategory={selected} currentDate={formattedCurrentDate} />
+  <!-- ✅ Food List -->
+  <FoodList
+    foods={data.dishes}
+    selectedCategory={selected}
+    currentDate={formattedCurrentDate}
+  />
 </main>

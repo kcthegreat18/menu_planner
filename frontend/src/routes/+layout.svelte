@@ -25,7 +25,8 @@
     <nav class="space-y-2 text-lg p-2 text-center lg:text-left">
       <a href="/" class="block text-white hover:underline font-raleway">Meals for Today</a>
       <a href="/meals" class="block text-white hover:underline font-raleway">All Meals</a>
-      <a href="/request" class="block text-white hover:underline font-raleway">Food FAQs</a>
+      <a href="/request" class="block text-white hover:underline font-raleway">Request a Meal</a>
+
     </nav>
   </aside>
 

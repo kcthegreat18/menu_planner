@@ -24,6 +24,8 @@ class MenuDishViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         today=localdate()
         return MenuDish.objects.filter(menu__date=today).select_related('dish')
+
+
     
 
 

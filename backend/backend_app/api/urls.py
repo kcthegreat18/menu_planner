@@ -8,6 +8,8 @@ router.register(r'menus', MenuViewSet, basename='menus')
 router.register(r'menu-dishes', MenuDishViewSet, basename='menu-dishes')
 
 
+
+
 urlpatterns = [
     path('', home),  # <-- root of /api/
     *router.urls,

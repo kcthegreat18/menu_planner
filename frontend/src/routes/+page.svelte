@@ -49,7 +49,7 @@
   });
 </script>
 
-<main class="px-4 pb-8 border-2">
+<main class="px-4 pb-8">
   <!-- ✅ Header Section -->
   <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
     <div>

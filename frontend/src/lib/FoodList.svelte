@@ -5,6 +5,8 @@
   export let selectedCategory = "";
   export let currentDate = "";
 
+  export let search="";
+
   const CATEGORY_MAP = {
     "Chicken": "CH",
     "Pork": "PO",
@@ -15,9 +17,26 @@
     "Fruits": "FR",
   };
 
-  $: filteredFoods = selectedCategory === "All Foods"
-    ? foods
-    : foods.filter(food => food.dish_type === CATEGORY_MAP[selectedCategory]);
+  $:filteredFoods=foods.filter(food=>{
+    const correctCategory= selectedCategory==="All Foods" || food.dish_type===CATEGORY_MAP[selectedCategory];
+
+    const correctSearch= search==="" || food.dish_name.toLowerCase().includes(search.toLowerCase());
+
+    return correctCategory && correctSearch;
+  })
+
+  function lowerAll(string){
+    let str=""
+    for (let i=0; i<string.length; i++){
+      if (i===0){
+        str+=string[i]
+      }
+      else{
+        str+=string[i].toLowerCase()
+      }
+    }
+      return str;
+  }
 
   function getMockCalories(food) {
     return food.dish_calories;
@@ -49,7 +68,7 @@
 </script>
 
 <!-- ✅ Flex-based Responsive Layout -->
-<div class="flex flex-col lg:flex-row gap-4 mt-4 px-4">
+<div class="flex flex-col lg:flex-row gap-4 mt-4 px-4 ">
 
   <!-- Left: Food Grid -->
   <div class="w-full lg:w-2/3">
@@ -75,11 +94,7 @@
               <!-- Rating & Price -->
               <div class="mt-2 flex justify-between items-center">
                 <div>
-                  {#each Array(5) as _, i}
-                    <span class={i < getMockRating(food) ? 'text-yellow-400' : 'text-gray-300'}>
-                      ★
-                    </span>
-                  {/each}
+                  <p class="text-sm text-gray-500">{lowerAll(food.dish_method)}</p>
                 </div>
                 <div class="font-semibold text-gray-800 text-sm sm:text-lg">
                   Php {getMockPrice(food)}

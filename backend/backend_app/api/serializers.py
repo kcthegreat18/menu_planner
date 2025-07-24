@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Dish, Menu, MenuDish
+from .models import Dish, Menu, MenuDish, Request
 
 
 
@@ -20,3 +20,8 @@ class MenuDishSerializer(serializers.ModelSerializer):
     class Meta:
         model=MenuDish
         fields=['id','dish', 'menu']
+
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Request
+        fields='__all__'

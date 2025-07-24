@@ -56,3 +56,15 @@ class MenuDish(models.Model):
 
     def __str__(self):
         return f"{self.dish.dish_name} in {self.menu.date}"
+
+class Request(models.Model):
+    name = models.CharField(max_length=30)
+    student_number = models.CharField(max_length=11) 
+    up_mail = models.EmailField(max_length=50)
+    dish_name = models.CharField(max_length=30)
+    dish_type = models.CharField(max_length=3, choices=DISH_TYPE)
+    dish_description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.dish_name}"
+#    dish_name=models.CharField(max_length=30, unique=True)

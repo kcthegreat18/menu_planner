@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Dish, Menu, MenuDish
-from .serializers import DishSerializer, MenuSerializer, MenuDishSerializer
+from .models import Dish, Menu, MenuDish, Request
+from .serializers import DishSerializer, MenuSerializer, MenuDishSerializer, RequestSerializer
 from django.http import JsonResponse
 from django.utils.timezone import localdate
 from .services import MenuGeneratorService
@@ -25,7 +25,9 @@ class MenuDishViewSet(viewsets.ReadOnlyModelViewSet):
         today=localdate()
         return MenuDish.objects.filter(menu__date=today).select_related('dish')
 
-
+class RequestViewSet(viewsets.ModelViewSet):
+    queryset = Request.objects.all()
+    serializer_class = RequestSerializer
     
 
 

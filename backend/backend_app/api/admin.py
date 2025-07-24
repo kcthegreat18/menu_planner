@@ -11,6 +11,10 @@ class MenuAdmin(admin.ModelAdmin):
 class MenuDishAdmin(admin.ModelAdmin):
     list_display=["menu","dish"]
 
+@admin.register(Request)
+class RequestAdmin(admin.ModelAdmin):
+    list_display=["name","student_number","up_mail","dish_name","dish_type","dish_description"]
+
 
 admin.site.register(Dish,DishAdmin)
 admin.site.register(Menu,MenuAdmin)

@@ -60,6 +60,7 @@
       <h1 class="text-2xl sm:text-3xl font-bitter font-semibold leading-snug">
         Request a Meal <br class="sm:hidden" />
       </h1>
+      <h2 class="text-l sm:text-2xl font-bitter leading-snug text-gray-700"> Want your favorite dish to be served in UFS? Request it now!</h2>
     </div>
   </div>
 

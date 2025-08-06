@@ -6,6 +6,23 @@
   export let currentDate = "";
 
   export let search="";
+  import Tracker from "./Tracker.svelte";
+  import AnimatedCircularProgressBar from "./AnimatedCircularProgressBar.svelte";
+  
+  let chosen_foods= [];
+
+  function sumCalories(foods) {
+    let total=0;
+    for (let i=0; i<foods.length; i++){
+      total+=getCalories(foods[i]);
+    }
+
+    return total;
+  }
+
+
+
+  $: totalCalories = sumCalories(chosen_foods);
 
   const CATEGORY_MAP = {
     "Chicken": "CH",
@@ -38,7 +55,7 @@
       return str;
   }
 
-  function getMockCalories(food) {
+  function getCalories(food) {
     return food.dish_calories;
   }
 
@@ -68,7 +85,7 @@
 </script>
 
 <!-- ✅ Flex-based Responsive Layout -->
-<div class="flex flex-col lg:flex-row gap-4 mt-4 px-4 ">
+<div class="flex flex-col lg:flex-row gap-4 mt-4 px-4">
 
   <!-- Left: Food Grid -->
   <div class="w-full lg:w-2/3">
@@ -77,7 +94,22 @@
     {:else}
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {#each filteredFoods as food}
-          <div class="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 gap-4">
+          <button type="button" class="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 gap-4 w-full text-left"
+            aria-label={`Select ${food.dish_name}`}
+            on:click={() => {
+              if (!chosen_foods.includes(food)){   
+                if (food.dish_calories === 0) {
+                  return;
+                }
+                else{
+                chosen_foods=[...chosen_foods, food];
+                }
+              }
+              else{
+                chosen_foods = chosen_foods.filter(f => f !== food);
+              }
+}}
+            on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { chosen_foods.push(food); } }}>
             
             <!-- Dish Image -->
             <img src={getMockImage(food)} alt={food.dish_name}
@@ -87,7 +119,7 @@
             <div class="flex flex-col flex-grow justify-between">
               <div>
                 <h3 class="font-semibold text-lg">{food.dish_name}</h3>
-                <p class="text-sm text-gray-500">{getMockCalories(food)} Kcal Per Serve</p>
+                <p class="text-sm text-gray-500">{getCalories(food)} Kcal Per Serve</p>
                 <p class="text-sm text-gray-500">{food.dish_description}</p>
               </div>
 
@@ -101,11 +133,34 @@
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         {/each}
       </div>
     {/if}
   </div>
+  
+  <div class="w-full lg:w-1/3 flex flex-col border-0.5 border-gray-200 rounded-lg shadow-sm p-4 space-y-4">
+    <div >
+      <Tracker calorie_intake={totalCalories}/>
 
+    </div>
+    <div class="flex flex-col space-y-4">
+      {#each chosen_foods as food}
+      <div class="grid grid-cols-3 items-center justify-between p-2 border-b">
+        <span class="font-semibold font-bitter">{food.dish_name}</span>
+        <span class="text-gray-500 text-center font-bitter">{getCalories(food)} Kcal</span>
+        <button class="text-amber-500 hover:text-amber-700 font-bitter" on:click={() => {
+          chosen_foods = chosen_foods.filter(f => f !== food);
+        }}>Remove</button>
+      </div>
 
+      {/each}
+      {#if chosen_foods.length === 0}
+        <p class="font-bitter ml-6 text-sm text-gray-400 text-center mr-12 mt-10"> Don't know your calories? Click <a class="text-amber-500"
+          href="https://www.calculator.net/calorie-calculator.html"
+          target="_blank">Here</a> and find out </p>
+      {/if}
+    </div>
+  </div>
+  
 </div>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import CategoryButtons from '$lib/CategoryButtons.svelte';
   import FoodList from '$lib/FoodList.svelte';
   import "../index.css";
@@ -35,7 +35,7 @@
     formattedCurrentDate = formatDateYYYYMMDD(now);
   }
 
-  function formatDateYYYYMMDD(date) {
+  function formatDateYYYYMMDD(date:Date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -66,7 +66,7 @@
   <!-- ✅ Category Buttons -->
   <CategoryButtons
     active={selected}
-    setActive={(val) => selected = val}
+    setActive={(val: string) => selected = val}
   />
 
   <!-- ✅ Food List -->

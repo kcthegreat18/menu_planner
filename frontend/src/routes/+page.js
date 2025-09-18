@@ -3,6 +3,6 @@ export async function load({ fetch }) {
   const data = await res.json();
 
   return {
-    dishes: data.map(entry => entry.dish) // unwrap nested "dish"
+    dishes: data.map((/** @type {{ dish: any; }} */ entry) => entry.dish) // unwrap nested "dish"
   };
 }

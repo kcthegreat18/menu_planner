@@ -11,6 +11,49 @@
   
   let chosen_foods= [];
 
+  let liked_foods= new Set();
+  let disliked_foods= new Set();
+
+
+  function likeFood(food) {
+    if (!liked_foods.has(food)){
+      if (disliked_foods.has(food)){
+        disliked_foods.delete(food);
+      }
+      liked_foods.add(food);
+    }
+    else{
+      liked_foods.delete(food);
+    }
+
+    liked_foods = new Set(liked_foods);
+    
+  }
+
+  function dislikeFood(food) {
+    if (!disliked_foods.has(food)) {
+      if (liked_foods.has(food)){
+        liked_foods.delete(food);
+      }
+      disliked_foods.add(food);
+    }
+    else{
+      disliked_foods.delete(food);
+    }
+  
+
+    disliked_foods = new Set(disliked_foods);
+    
+  
+  }
+
+    function foodStatus(food) {
+    if (liked_foods.has(food)) return "liked";
+    if (disliked_foods.has(food)) return "disliked";
+    return "neutral";
+  }
+  
+
   function sumCalories(foods) {
     let total=0;
     for (let i=0; i<foods.length; i++){
@@ -94,8 +137,11 @@
     {:else}
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {#each filteredFoods as food}
-          <button type="button" class="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 gap-4 w-full text-left"
+
+          <div type="button" class="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 gap-4 w-full text-left"
             aria-label={`Select ${food.dish_name}`}
+            role="button"
+            tabindex="0"
             on:click={() => {
               if (!chosen_foods.includes(food)){   
                 if (food.dish_calories === 0) {
@@ -118,7 +164,12 @@
             <!-- Food Info -->
             <div class="flex flex-col flex-grow justify-between">
               <div>
-                <h3 class="font-semibold text-lg">{food.dish_name}</h3>
+                <div class="flex items-center justify-between">
+                  <h3 class="font-semibold text-lg">{food.dish_name}</h3>
+                  <div class="font-semibold text-gray-800 text-sm sm:text-lg">
+                  Php {getMockPrice(food)}
+                  </div>
+                </div>
                 <p class="text-sm text-gray-500">{getCalories(food)} Kcal Per Serve</p>
                 <p class="text-sm text-gray-500">{food.dish_description}</p>
               </div>
@@ -128,12 +179,43 @@
                 <div>
                   <p class="text-sm text-gray-500">{lowerAll(food.dish_method)}</p>
                 </div>
-                <div class="font-semibold text-gray-800 text-sm sm:text-lg">
-                  Php {getMockPrice(food)}
+
+                <div class="flex items-center space-x-4">
+                  <button 
+                    aria-label="Like this dish"
+                    on:click={()=>{
+                      likeFood(food);
+                      console.log("liked_foods:", Array.from(liked_foods).map(f => f.dish_name));
+                      console.log("disliked foods:", [...disliked_foods].map(f => f.dish_name));
+
+                      }}
+
+                    class="hover:text-green-600  {liked_foods.has(food) && !disliked_foods.has(food) ? 'text-green-600' :'text-black'}"
+
+                    
+                    
+                  >
+                    <i class="{liked_foods.has(food) && !disliked_foods.has(food)? 'fa-solid': 'fa-regular'} fa-thumbs-up fa-lg"></i>
+                  </button>
+
+                  <button 
+                    aria-label="Dislike this dish"
+                    on:click={()=>{
+                      dislikeFood(food);
+                      console.log("liked_foods:", Array.from(liked_foods).map(f => f.dish_name));
+                      console.log("disliked foods:", [...disliked_foods].map(f => f.dish_name));
+                      }}
+                    
+                    class="hover:text-red-700/80 {disliked_foods.has(food)  && !liked_foods.has(food) ? 'text-red-700/80' :'text-black'}"
+                  >
+                     <i class="{disliked_foods.has(food) && !liked_foods.has(food) ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-lg"></i>
+
+                  </button>
                 </div>
+
               </div>
             </div>
-          </button>
+          </div>
         {/each}
       </div>
     {/if}

@@ -10,8 +10,12 @@ logger = logging.getLogger(__name__)
 def generate_weekly_menus():
     today = localtime().date()
 
-    # 🔁 Start from next week's Monday
-    next_monday = today + timedelta(days=(7 - today.weekday()))
+    # Sunday → next day is Monday
+    days_until_monday = (7 - today.weekday()) % 7
+    if days_until_monday == 0:
+        days_until_monday = 7
+
+    next_monday = today + timedelta(days=days_until_monday)
 
     for i in range(6):  # Monday to Saturday
         day = next_monday + timedelta(days=i)
@@ -23,13 +27,14 @@ def generate_weekly_menus():
             logger.info(f"⚠️ Menu already exists for {day}, skipping...")
 
 
+
 def start_scheduler():
     scheduler = BackgroundScheduler(timezone=get_current_timezone())
     
     # ⏰ TESTING MODE: Runs at 11:00 PM today
     scheduler.add_job(
         generate_weekly_menus,
-        CronTrigger(hour=6, minute=1),
+        CronTrigger(day_of_week="sun", hour=1, minute=17), #CronTrigger(hour=6, minute=1),
         id="weekly_menu_generation"
     )
 

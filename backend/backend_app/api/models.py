@@ -38,6 +38,9 @@ class Dish(models.Model):
     dish_description=models.CharField(max_length=100, blank=True)
     dish_calories=models.PositiveIntegerField(max_length=3, blank=True)
 
+    dish_likes=models.PositiveIntegerField(default=0)
+    dish_dislikes=models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return f"{self.dish_name}"
 

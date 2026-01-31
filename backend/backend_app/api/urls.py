@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import DishViewSet, MenuViewSet, MenuDishViewSet, home, generate_menu_view, RequestViewSet
+from .views import DishViewSet, MenuViewSet, MenuDishViewSet, home, generate_menu_view, RequestViewSet, dish_react_increment
 
 router = DefaultRouter()
 router.register(r'dishes', DishViewSet, basename='dishes')
@@ -15,4 +15,7 @@ urlpatterns = [
     path('', home),  # <-- root of /api/
     *router.urls,
     path('generate-menu/', generate_menu_view),
+    path("dish/react-increment/", dish_react_increment),
+
+    
 ]

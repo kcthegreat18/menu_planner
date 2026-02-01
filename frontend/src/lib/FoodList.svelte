@@ -142,6 +142,23 @@
 
     return await res.json();
   }
+
+
+  //For the popup
+
+  let popup_message="";
+  let show_Popup=false;
+  let popupTimer;
+
+  function triggerPopup(message){
+    popup_message=message;
+    show_Popup=true;
+
+    clearTimeout(popupTimer)
+    popupTimer=setTimeout(() => {
+      show_Popup=false;
+    }, 1500)
+  }
 </script>
 
 <!-- ✅ Flex-based Responsive Layout -->
@@ -203,6 +220,7 @@
                     on:click|stopPropagation={async () => {
                       const wasLiked = liked_foods.has(food);     // BEFORE
                       likeFood(food);                             // toggle local UI
+                      triggerPopup(`You liked ${food.dish_name}`);
                       const isLiked = liked_foods.has(food);      // AFTER
 
                       // ✅ Only increment when it turns ON
@@ -213,6 +231,7 @@
                           console.error(e);
                           // optional rollback to keep UI consistent
                           likeFood(food);
+                          
                         }
                       }
 
@@ -229,6 +248,7 @@
                     on:click|stopPropagation={async () => {
                       const wasDisliked = disliked_foods.has(food);  // BEFORE
                       dislikeFood(food);                             // toggle local UI
+                      triggerPopup(`You disliked ${food.dish_name}`);
                       const isDisliked = disliked_foods.has(food);   // AFTER
 
                       // ✅ Only increment when it turns ON
@@ -239,6 +259,7 @@
                           console.error(e);
                           // optional rollback
                           dislikeFood(food);
+                          
                         }
                       }
 
@@ -258,6 +279,8 @@
         {/each}
       </div>
     {/if}
+
+
   </div>
   
   <div class="w-full lg:w-1/3 flex flex-col border-0.5 border-gray-200 rounded-lg shadow-sm p-4 space-y-4">
@@ -283,5 +306,11 @@
       {/if}
     </div>
   </div>
+
+  {#if show_Popup==true}
+  <div class="fixed bottom-6 right-6 bg-black text-white px-4 py-2 rounded-lg shadow-lg transition-opacity">
+    {popup_message}
+  </div>
+{/if}
   
 </div>

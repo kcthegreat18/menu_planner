@@ -1,6 +1,8 @@
 <script>
 // @ts-nocheck
 
+  const API_BASE = "http://127.0.0.1:8000";
+
   export let foods = [];
   export let selectedCategory = "";
   export let currentDate = "";
@@ -125,6 +127,21 @@
   function getMockImage(food) {
     return `/images/${food.dish_name}.jpg`;
   }
+
+
+  async function reactIncrement(dishId, reaction) {
+    const res = await fetch(`${API_BASE}/dish/react-increment/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dish_id: dishId, reaction }), // reaction: "like"|"dislike"
+    });
+
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
+    return await res.json();
+  }
 </script>
 
 <!-- ✅ Flex-based Responsive Layout -->
@@ -183,34 +200,56 @@
                 <div class="flex items-center space-x-4">
                   <button 
                     aria-label="Like this dish"
-                    on:click={()=>{
-                      likeFood(food);
-                      console.log("liked_foods:", Array.from(liked_foods).map(f => f.dish_name));
+                    on:click|stopPropagation={async () => {
+                      const wasLiked = liked_foods.has(food);     // BEFORE
+                      likeFood(food);                             // toggle local UI
+                      const isLiked = liked_foods.has(food);      // AFTER
+
+                      // ✅ Only increment when it turns ON
+                      if (!wasLiked && isLiked) {
+                        try {
+                          await reactIncrement(food.id, "like");
+                        } catch (e) {
+                          console.error(e);
+                          // optional rollback to keep UI consistent
+                          likeFood(food);
+                        }
+                      }
+
+                      console.log("liked_foods:", [...liked_foods].map(f => f.dish_name));
                       console.log("disliked foods:", [...disliked_foods].map(f => f.dish_name));
-
-                      }}
-
-                    class="hover:text-green-600  {liked_foods.has(food) && !disliked_foods.has(food) ? 'text-green-600' :'text-black'}"
-
-                    
-                    
+                    }}
+                    class="hover:text-green-600 {liked_foods.has(food) && !disliked_foods.has(food) ? 'text-green-600' :'text-black'}"
                   >
-                    <i class="{liked_foods.has(food) && !disliked_foods.has(food)? 'fa-solid': 'fa-regular'} fa-thumbs-up fa-lg"></i>
+                    <i class="{liked_foods.has(food) && !disliked_foods.has(food) ? 'fa-solid' : 'fa-regular'} fa-thumbs-up fa-lg"></i>
                   </button>
 
                   <button 
                     aria-label="Dislike this dish"
-                    on:click={()=>{
-                      dislikeFood(food);
-                      console.log("liked_foods:", Array.from(liked_foods).map(f => f.dish_name));
-                      console.log("disliked foods:", [...disliked_foods].map(f => f.dish_name));
-                      }}
-                    
-                    class="hover:text-red-700/80 {disliked_foods.has(food)  && !liked_foods.has(food) ? 'text-red-700/80' :'text-black'}"
-                  >
-                     <i class="{disliked_foods.has(food) && !liked_foods.has(food) ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-lg"></i>
+                    on:click|stopPropagation={async () => {
+                      const wasDisliked = disliked_foods.has(food);  // BEFORE
+                      dislikeFood(food);                             // toggle local UI
+                      const isDisliked = disliked_foods.has(food);   // AFTER
 
+                      // ✅ Only increment when it turns ON
+                      if (!wasDisliked && isDisliked) {
+                        try {
+                          await reactIncrement(food.id, "dislike");
+                        } catch (e) {
+                          console.error(e);
+                          // optional rollback
+                          dislikeFood(food);
+                        }
+                      }
+
+                      console.log("liked_foods:", [...liked_foods].map(f => f.dish_name));
+                      console.log("disliked foods:", [...disliked_foods].map(f => f.dish_name));
+                    }}
+                    class="hover:text-red-700/80 {disliked_foods.has(food) && !liked_foods.has(food) ? 'text-red-700/80' :'text-black'}"
+                  >
+                    <i class="{disliked_foods.has(food) && !liked_foods.has(food) ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-lg"></i>
                   </button>
+
                 </div>
 
               </div>

@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import F
 
+from .models import Dish
+
 
 def home(request):
     return JsonResponse({"message": "Welcome to the Menu Planner API"})

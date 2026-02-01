@@ -17,5 +17,6 @@ urlpatterns = [
     path('generate-menu/', generate_menu_view),
     path("dish/react-increment/", dish_react_increment),
 
+
     
 ]

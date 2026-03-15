@@ -29,7 +29,7 @@ def start_scheduler():
     # ⏰ TESTING MODE: Runs at 11:00 PM today
     scheduler.add_job(
         generate_weekly_menus,
-        CronTrigger(hour=6, minute=1),
+        CronTrigger(hour=1, minute=10),
         id="weekly_menu_generation"
     )
 

@@ -7,6 +7,7 @@
 
   export let search="";
   import { goto } from '$app/navigation';
+  import Tracker from './Tracker.svelte';
   const CATEGORY_MAP = {
     "Chicken": "CH",
     "Pork": "PO",

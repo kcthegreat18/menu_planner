@@ -23,7 +23,7 @@
             ? 'bg-red-800/70 text-white border-red-800'
             : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
         }"
-      on:click={() => setActive(category.label)}
+      onclick={() => setActive(category.label)}
     >
       {category.label}
     </button>

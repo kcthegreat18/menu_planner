@@ -31,11 +31,12 @@ def generate_weekly_menus():
 def start_scheduler():
     scheduler = BackgroundScheduler(timezone=get_current_timezone())
     
-    # ⏰ TESTING MODE: Runs at 11:00 PM today
+    # ⏰ TESTING MODE: 
     scheduler.add_job(
         generate_weekly_menus,
-        CronTrigger(hour=1, minute=10),
-        id="weekly_menu_generation"
+        CronTrigger(day_of_week='sun', hour=1, minute=10),
+        id="weekly_menu_generation",
+        replace_existing=True
     )
 
     scheduler.start()

@@ -8,3 +8,5 @@
 **Feedback / Request a Dish Page for users:**
 <img width="1586" height="897" alt="image" src="https://github.com/user-attachments/assets/eeb61456-c8d8-4178-869a-c610e3a30873" />
 
+**Admin Page:**
+<img width="1918" height="841" alt="image" src="https://github.com/user-attachments/assets/4bfee7c1-ac23-4a43-a49d-7699c285549f" />

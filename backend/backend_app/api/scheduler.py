@@ -41,7 +41,7 @@ def generate_weekly_menus():
 def start_scheduler():
     scheduler = BackgroundScheduler(timezone=get_current_timezone())
     
-    # ⏰ TESTING MODE: Runs at 11:00 PM today
+    # ⏰ TESTING MODE: 
     scheduler.add_job(
         generate_weekly_menus,
         CronTrigger(day_of_week="sun", hour=20, minute=52), #CronTrigger(hour=6, minute=1),

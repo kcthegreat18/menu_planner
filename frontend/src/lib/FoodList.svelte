@@ -307,10 +307,19 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+
+  <div>
+    <button>hello</button>
+  </div>
+
+
+=======
   {#if show_Popup==true}
   <div class="fixed bottom-6 right-6 bg-black text-white px-4 py-2 rounded-lg shadow-lg transition-opacity">
     {popup_message}
   </div>
 {/if}
   
+>>>>>>> 7d68b309fdb17850e83a695940d41ae376cffb6f
 </div>

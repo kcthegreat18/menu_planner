@@ -3,7 +3,6 @@ from .models import Dish, Menu, MenuDish, Request
 from .serializers import DishSerializer, MenuSerializer, MenuDishSerializer, RequestSerializer
 from django.http import JsonResponse
 from django.utils.timezone import localdate
-from .services import MenuGeneratorService
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -11,6 +10,7 @@ from rest_framework import status
 from django.db.models import F
 
 from .models import Dish
+from .scheduler import generate_weekly_menus
 
 
 def home(request):
@@ -40,9 +40,14 @@ class RequestViewSet(viewsets.ModelViewSet):
 
 
 def generate_menu_view(request):
-    service = MenuGeneratorService()
-    menu = service.generate_menu()
-    return JsonResponse({"message": f"Menu generated for {menu.date}"})
+    result = generate_weekly_menus()
+    return JsonResponse(
+        {
+            "message": "Weekly menu generation completed",
+            "generated": [str(day) for day in result["generated"]],
+            "skipped": [str(day) for day in result["skipped"]],
+        }
+    )
 
 
 @api_view(["POST"])

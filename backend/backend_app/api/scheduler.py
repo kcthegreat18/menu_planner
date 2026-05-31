@@ -17,14 +17,24 @@ def generate_weekly_menus():
 
     next_monday = today + timedelta(days=days_until_monday)
 
+    generated_days = []
+    skipped_days = []
+
     for i in range(6):  # Monday to Saturday
         day = next_monday + timedelta(days=i)
         service = MenuGeneratorService(date=day)
         menu = service.generate_menu()
         if menu:
+            generated_days.append(day)
             logger.info(f"✅ Generated menu for {day}")
         else:
+            skipped_days.append(day)
             logger.info(f"⚠️ Menu already exists for {day}, skipping...")
+
+    return {
+        "generated": generated_days,
+        "skipped": skipped_days,
+    }
 
 
 
@@ -34,7 +44,7 @@ def start_scheduler():
     # ⏰ TESTING MODE: Runs at 11:00 PM today
     scheduler.add_job(
         generate_weekly_menus,
-        CronTrigger(day_of_week="sun", hour=1, minute=17), #CronTrigger(hour=6, minute=1),
+        CronTrigger(day_of_week="sun", hour=20, minute=52), #CronTrigger(hour=6, minute=1),
         id="weekly_menu_generation"
     )
 

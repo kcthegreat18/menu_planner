@@ -11,15 +11,15 @@ class MenuGeneratorService:
         self.week_start = self.today - timedelta(days=self.today.weekday())
         self.week_end = self.week_start + timedelta(days=6)
 
-    def get_week_used_dishes(self):
+    def get_week_used_dishes(self): #find dishes already used in current week
         return Dish.objects.filter(
             dish_menus__menu__date__range=(self.week_start, self.week_end)
         ).distinct()
 
-    def get_candidates(self):
+    def get_candidates(self): #get already used dishes
         return Dish.objects.exclude(id__in=self.get_week_used_dishes())
 
-    def pick_dishes(self, dishes, count, filters=None):
+    def pick_dishes(self, dishes, count, filters=None): #randomly sample dishes
         filtered = dishes
         if filters:
             filtered = dishes.filter(**filters)

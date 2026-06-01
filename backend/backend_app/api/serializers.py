@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Dish, Menu, MenuDish, Request
 
-
+# Define shape of JSON, contract between DJANGO models and frontend JSON
 
 class DishSerializer(serializers.ModelSerializer):
     class Meta:

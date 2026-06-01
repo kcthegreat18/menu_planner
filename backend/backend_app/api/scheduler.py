@@ -5,6 +5,8 @@ from datetime import timedelta
 from .services import MenuGeneratorService
 import logging
 
+#> APScheduler lets the app generate menus automatically on a schedule. The generation function also skips #existing menus, so running it more than once should not create duplicate menus for the same date.
+
 logger = logging.getLogger(__name__)
 
 def generate_weekly_menus():
@@ -44,7 +46,7 @@ def start_scheduler():
     # ⏰ TESTING MODE: 
     scheduler.add_job(
         generate_weekly_menus,
-        CronTrigger(day_of_week="sun", hour=20, minute=52), #CronTrigger(hour=6, minute=1),
+        CronTrigger(day_of_week="sun", hour=5, minute=10), #CronTrigger(hour=6, minute=1),
         id="weekly_menu_generation"
     )
 
